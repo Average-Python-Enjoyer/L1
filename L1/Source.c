@@ -23,43 +23,34 @@ int main() {
         switch (operation) {
         case 1:
             create_array(array, &size);
-            while (getchar() != '\n');
             break;
         case 2:
             print_array(array, size);
-            while (getchar() != '\n');
             break;
         case 3:
             printf("\033[0;32m NOTHING HAPPANED! YAY!\n \033[0m");
-            while (getchar() != '\n');
             break;
         case 4:
             sort_array(array, size, 1);
             printf("\033[0;32m Array sorted by year\n \033[0m");
-            while (getchar() != '\n');
             break;
         case 5:
             sort_array(array, size, 2);
             printf("\033[0;32m Array sorted by GPU clock\n \033[0m");
-            while (getchar() != '\n');
             break;
         case 6:
             size = 0;
             printf("\033[0;32m Array cleared\n \033[0m");
-            while (getchar() != '\n');
             break;
         case 7:
             printf("\033[0;32m Exiting program\n \033[0m");
-            while (getchar() != '\n');
             break;
         default:
             printf("\033[0;33m Invalid operation\n \033[0m");
-            while (getchar() != '\n');
             fflush(stdin);
             break;
         }
+        while (getchar() != '\n');
     }
     return 0;
 }
-
-
