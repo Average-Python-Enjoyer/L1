@@ -11,7 +11,7 @@ int create_array(struct GraphicsCard array[], int* size) {
     }
     int n;
     printf("\033[0;37m Enter number of graphics cards to add: \033[0m");
-    while (scanf("%d", &n) != 1 || n <= 0 || getchar() != ('\n')) {
+    while (scanf("%d", &n) != 1 || n <= 0 || getchar() != '\n') {
         printf("\033[0;33m RETRY:\033[0m");
         rewind(stdin);
     }
@@ -26,8 +26,6 @@ int create_array(struct GraphicsCard array[], int* size) {
         fgets(card.model, 50, stdin);
         card.model[strcspn(card.model, "\n")] = '\0';
 
-
-        //while (getchar() != '\n');
 
         printf("\033[0;37m Enter GPU clock of graphics card %d: \033[0m", i + 1);
         while (scanf_s("%f", &card.gpu_clock) != 1 || card.gpu_clock <= 0) {
@@ -65,9 +63,24 @@ void print_array(struct GraphicsCard array[], int size) {
 
 
 int compare(const void* a, const void* b) {
-    struct GraphicsCard* card1 = (struct GraphicsCard*)a;
-    struct GraphicsCard* card2 = (struct GraphicsCard*)b;
+    const struct GraphicsCard* card1 = (const struct GraphicsCard*)a;
+    const struct GraphicsCard* card2 = (const struct GraphicsCard*)b;
     return card1->year - card2->year;
+}
+void swap(struct GraphicsCard* a, struct GraphicsCard* b) {
+    struct GraphicsCard temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void sort_by_gpu_clock(struct GraphicsCard array[], int size) {
+    for (int i = 0; i < size; i++) {
+        for (int j = i + 1; j < size; j++) {
+            if (array[i].gpu_clock < array[j].gpu_clock) {
+                swap(&array[i], &array[j]);
+            }
+        }
+    }
 }
 
 void sort_array(struct GraphicsCard array[], int size, int field) {
@@ -76,15 +89,7 @@ void sort_array(struct GraphicsCard array[], int size, int field) {
         qsort(array, size, sizeof(struct GraphicsCard), compare);
         break;
     case 2:
-        for (int i = 0; i < size; i++) {
-            for (int j = i + 1; j < size; j++) {
-                if (array[i].gpu_clock < array[j].gpu_clock) {
-                    struct GraphicsCard temp = array[i];
-                    array[i] = array[j];
-                    array[j] = temp;
-                }
-            }
-        }
+        sort_by_gpu_clock(array, size);
         break;
     default:
         printf("\033[0;33m Invalid field\n\033[0m");
