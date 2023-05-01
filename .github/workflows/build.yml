@@ -21,6 +21,7 @@ jobs:
         run: |
           build-wrapper-win-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe" L1.sln /t:Clean;
       - name: Build project
+        shell: cmd
         run: |
           "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe" L1.sln /t:Build    
       - name: Run sonar-scanner
